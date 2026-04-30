@@ -6,28 +6,26 @@ def transform(df):
         df.columns
         .str.strip()
         .str.lower()
-        .str.strip()
-        .str.lower()
         .str.replace(" ", "_")
         .str.replace("(", "", regex=False)
         .str.replace(")", "", regex=False)
     )
 
-    # remove missing rows based on some column
-    df = df.dropna(subset = ["model year", "electric range"])
-    
+    # remove missing rows based on required columns
+    df = df.dropna(subset=["model_year", "electric_range"])
+
     # convert to numeric safely
-    df["model year"] = pd.to_numeric(df["model year"],errors = "coerce")
-    df["electric range"] = pd.to_numeric(df["electric range"],errors = "coerce")
+    df["model_year"] = pd.to_numeric(df["model_year"], errors="coerce")
+    df["electric_range"] = pd.to_numeric(df["electric_range"], errors="coerce")
 
-    # remove missing rows based on some column
-    df = df.dropna(subset = ["model year", "electric range"])
+    # drop again after conversion
+    df = df.dropna(subset=["model_year", "electric_range"])
 
-    # remove rows where electric range = 0
-    df = df[df["electric range"] != 0]
-    
-    # remove duplicates based on dol vehicle id
-    df = df.drop_duplicates(subset = ["dol vehicle id"])
+    # remove rows where electric_range = 0
+    df = df[df["electric_range"] != 0]
+
+    # remove duplicates based on dol_vehicle_id
+    df = df.drop_duplicates(subset=["dol_vehicle_id"])
 
     # reset index
     df = df.reset_index(drop=True)
