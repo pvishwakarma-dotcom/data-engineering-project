@@ -6,6 +6,11 @@ def transform(df):
         df.columns
         .str.strip()
         .str.lower()
+        .str.strip()
+        .str.lower()
+        .str.replace(" ", "_")
+        .str.replace("(", "", regex=False)
+        .str.replace(")", "", regex=False)
     )
 
     # remove missing rows based on some column
