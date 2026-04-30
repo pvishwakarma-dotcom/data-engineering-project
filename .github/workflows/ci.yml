@@ -1,4 +1,4 @@
-name: Data Pipeline CI
+name: Data Pipeline CI/CD
 
 on:
   push:
@@ -26,3 +26,15 @@ jobs:
 
     - name: Run pipeline
       run: python pipeline.py
+
+    #  Install AWS CLI
+    - name: Install AWS CLI
+      run: pip install awscli
+
+    #  CD Step: Upload to S3
+    - name: Upload processed file to S3
+      run: aws s3 cp data/processed.csv s3://YOUR-BUCKET-NAME/
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
