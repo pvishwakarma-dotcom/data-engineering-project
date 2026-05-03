@@ -14,5 +14,7 @@ def run_pipeline():
     load(df)
     print("Data loaded successfully!")
 
+    print("Pipeline worked")
+
 if __name__ == "__main__":
     run_pipeline()
